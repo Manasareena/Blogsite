@@ -1,0 +1,39 @@
+{%extends 'uhome.html'%}
+{%block uhome%}
+<h3 class="bg-info "></h3>
+<div>
+{% for i in data%}
+<div class="card mt-3">
+  {%if i.image%}
+  <img src="{{i.image.url}}" alt="blog-image">
+  {%endif%}
+  <div class="card-body">
+    <p class="text-end">Posted By:{{i.author.first_name}}{{i.author.last_name}}</p>
+    <h1 class="card-title">{{i.title}}</h1>
+    <div class="card-content">
+      {{i.content}}
+    </div>
+    
+    <p>Posted on: {{i.data}}</p>
+  </div>
+  <div class="card-footer">
+    <a href="{%url 'add_like' i.id %}" class="btn btn-outline-success btn-block"><span class="material-symbols-outlined">thumb_up</span>
+      <span class="badge badge-danger">{{i.liked_count}}</span></a></span>
+    <button data-toggle="collapse" class="btn btn-warning btn-block" data-target="#demo{{i.id}}">Comments</button>
+      <div id="demo{{i.id}}" class="collapse jumbotron fade">
+      <div>
+        <h3>Comment</h3>
+        {%for c in cmnts%}
+        {%if c.blog.id == i.id%}
+        <ul class="list-group">
+          <li class="list-group-item"><b>{{c.user}}:</b>{{c.comment}}</li>
+        </ul>
+        {%endif%}
+        {%endfor%}
+    </div>
+  </div>
+</div>
+</div>
+{%endfor%}
+</div>
+{%endblock uhome%}
